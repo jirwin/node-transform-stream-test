@@ -1,0 +1,23 @@
+{
+  "name": "transform-stream-test",
+  "version": "0.0.1",
+  "description": "A simple module that leverages tape to test a transform stream",
+  "main": "index.js",
+  "scripts": {
+    "just-tests": "./node_modules/faucet/bin/cmd.js ./test/*.js",
+    "test": "./node_modules/covert/bin/cmd.js ./test/*.js"
+  },
+  "author": [
+    "Phoebe Simon <phoebesimon@gmail.com>",
+    "Justin Gallardo <justin.gallardo@gmail.com>"
+  ],
+  "license": "Apache v2",
+  "devDependencies": {
+    "tape": "~3.0.0",
+    "faucet": "0.0.1",
+    "covert": "~1.0.1"
+  },
+  "dependencies": {
+    "underscore": "~1.7.0"
+  }
+}
