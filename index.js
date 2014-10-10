@@ -7,8 +7,15 @@ var TransformStreamTest = function(t, stream) {
   this.index = 0;
 };
 
+
+TransformStreamTest.prototype._incrementPlanned = function(num) {
+  this.t.plan(this.t._plan += num);
+};
+
+
 TransformStreamTest.prototype.deepEqual = function(input, output, callback) {
   var self = this,
+      inputCounter = 0,
       outputCounter = 0,
       matches = 0,
       finishedEvent;
@@ -52,22 +59,25 @@ TransformStreamTest.prototype.deepEqual = function(input, output, callback) {
   this.stream.on('data', processChunk);
 
   this.stream.once(finishedEvent, function() {
-    var plan = self.t._plan;
-
-    self.t.plan(plan += 2);
-
+    self._incrementPlanned(2);
     self.t.equal(outputCounter,
                  output.length,
-                 'The expected number of output objects were seen.');
+                 'The expected number of output chunks were seen.');
     self.t.equal(output.length,
                  matches,
-                 'The expected number of output objects matched.');
+                 'The expected number of output chunks matched.');
     callback(true);
   });
 
   _.each(input, function(inputChunk) {
     self.stream.write(inputChunk);
+    inputCounter++;
   });
+
+  this._incrementPlanned(1);
+  this.t.equal(inputCounter,
+               input.length,
+               'The expected number of chunks were written to the stream.')
 };
 
 
