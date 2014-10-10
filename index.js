@@ -4,17 +4,23 @@ var _ = require('underscore');
 var TransformStreamTest = function(t, stream) {
   this.t = t;
   this.stream = stream;
+  this.index = 0;
 };
 
 TransformStreamTest.prototype.deepEqual = function(input, output, callback) {
   var self = this,
       outputCounter = 0,
-      matches = 0;
+      matches = 0,
+      finishedEvent;
+
+  this.index++;
+
+  finishedEvent = 'done' + this.index;
 
   input = input instanceof Array ? input : [input];
   output = output instanceof Array ? output : [output];
 
-  this.stream.on('data', function(chunk) {
+  function processChunk(chunk) {
     var foundMatch = false;
 
     chunk = chunk instanceof Buffer ? chunk.toString() : chunk;
@@ -31,17 +37,21 @@ TransformStreamTest.prototype.deepEqual = function(input, output, callback) {
     });
 
     if (!foundMatch) {
+      self.stream.removeListener('data', processChunk);
       callback(false);
       return;
     }
 
     if (outputCounter === output.length) {
-      self.stream.emit('done');
+      self.stream.removeListener('data', processChunk);
+      self.stream.emit(finishedEvent);
       return;
     }
-  });
+  }
 
-  this.stream.on('done', function() {
+  this.stream.on('data', processChunk);
+
+  this.stream.once(finishedEvent, function() {
     var plan = self.t._plan;
 
     self.t.plan(plan += 2);
