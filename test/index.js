@@ -9,9 +9,12 @@ test('single input', function(t) {
 
   t.plan(1);
 
-  fixture.deepEqual({'foo': 'bar'}, {'foo': 'bar'}, function(success) {
-    t.ok(success, 'Given a single input the output matched.');
-  });
+  fixture.deepEqual(
+    {'foo': 'bar'},
+    {'foo': 'bar'},
+    'Given a single input the output matched',
+    t.ok
+  );
 });
 
 test('single input, bad ouput', function(t) {
@@ -22,9 +25,8 @@ test('single input, bad ouput', function(t) {
   fixture.deepEqual(
     {'foo': 'bar'},
     {'foo': 'anything else'},
-    function(success) {
-      t.ifError(success, 'Input did not match output as expected.');
-    }
+    'Input did not match output as expected',
+    t.ifError
   );
 });
 
@@ -37,9 +39,8 @@ test('multiple input', function(t) {
   fixture.deepEqual(
     [{'foo': 'bar'}, {'baz': 'qux'}],
     [{'foo': 'bar'}, {'baz': 'qux'}],
-    function(success) {
-      t.ok(success, 'Given multiple inputs the outputs matched.');
-    }
+    'Given multiple inputs the outputs matched.',
+    t.ok
   );
 });
 
@@ -52,9 +53,8 @@ test('double output', function(t) {
   fixture.deepEqual(
     [{'foo': 'bar'}],
     [{'foo': 'bar'}, {'foo': 'bar'}],
-    function(success) {
-      t.ok(success, 'For a single input we received two identical outputs.');
-    }
+    'For a single input we received two idential outputs',
+    t.ok
   );
 });
 
@@ -68,9 +68,8 @@ test('reverse string', function(t) {
   fixture.deepEqual(
     matchString,
     matchString.split('').reverse().join(''),
-    function(success) {
-      t.ok(success, 'Given a string the output matched the reverse of the string.');
-    }
+    'Given a string the output matched the reverse of the string',
+    t.ok
   );
 });
 
@@ -84,9 +83,8 @@ test('reverse unicode string', function(t) {
   fixture.deepEqual(
     matchString,
     matchString.split('').reverse().join(''),
-    function(success) {
-      t.ok(success, 'Given a string with unicode characters the output matched the reverse of the string.');
-    }
+    'Given a string with unicode characters the output matched the reverse of the string',
+    t.ok
   );
 });
 
@@ -106,9 +104,8 @@ test('reverse string - multiple async loop test cases', function(t) {
     fixture.deepEqual(
       matchString,
       matchString.split('').reverse().join(''),
-      function(success) {
-        t.ok(success, 'Given a string the output matched the reverse of the string.');
-      }
+      'Given a string the output matched the reverse of the string',
+      t.ok
     );
   });
 });
@@ -126,32 +123,28 @@ test('reverse string - multiple async test cases', function(t) {
   fixture.deepEqual(
     matchString1,
     matchString1.split('').reverse().join(''),
-    function(success) {
-      t.ok(success, 'Given a string the output matched the reverse of the string.');
-    }
+    'Given a string the output matched the reverse of the string',
+    t.ok
   );
 
   fixture.deepEqual(
     matchString2,
     matchString2.split('').reverse().join(''),
-    function(success) {
-      t.ok(success, 'Given a string the output matched the reverse of the string.');
-    }
+    'Given a string the output matched the reverse of the string',
+    t.ok
   );
 
   fixture.deepEqual(
     matchString3,
     matchString3.split('').reverse().join(''),
-    function(success) {
-      t.ok(success, 'Given a string the output matched the reverse of the string.');
-    }
+    'Given a string the output matched the reverse of the string',
+    t.ok
   );
 
   fixture.deepEqual(
     matchString4,
     matchString4.split('').reverse().join(''),
-    function(success) {
-      t.ok(success, 'Given a string the output matched the reverse of the string.');
-    }
+    'Given a string the output matched the reverse of the string',
+    t.ok
   );
 });

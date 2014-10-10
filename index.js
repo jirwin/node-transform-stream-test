@@ -13,7 +13,7 @@ TransformStreamTest.prototype._incrementPlanned = function(num) {
 };
 
 
-TransformStreamTest.prototype.deepEqual = function(input, output, callback) {
+TransformStreamTest.prototype.deepEqual = function(input, output, msg, callback) {
   var self = this,
       inputCounter = 0,
       outputCounter = 0,
@@ -45,7 +45,7 @@ TransformStreamTest.prototype.deepEqual = function(input, output, callback) {
 
     if (!foundMatch) {
       self.stream.removeListener('data', processChunk);
-      callback(false);
+      callback(false, msg);
       return;
     }
 
@@ -66,7 +66,7 @@ TransformStreamTest.prototype.deepEqual = function(input, output, callback) {
     self.t.equal(output.length,
                  matches,
                  'The expected number of output chunks matched.');
-    callback(true);
+    callback(true, msg);
   });
 
   _.each(input, function(inputChunk) {
