@@ -148,3 +148,30 @@ test('reverse string - multiple async test cases', function(t) {
     t.ok
   );
 });
+
+
+test('reverse string - no output expected but output received', function(t) {
+  var fixture = tst(t, new streams.ReverseTransform());
+
+  t.plan(1);
+
+  fixture.deepEqual('foo', null, 'Given a string we got no output as expected', t.ifError);
+});
+
+
+test('blackhole - no output expected', function(t) {
+  var fixture = tst(t, new streams.BlackholeTransform());
+
+  t.plan(1);
+
+  fixture.deepEqual('foo', [], 'Given a string we got no output as expected', t.ok, 100);
+});
+
+
+test('blackhole - no output expected with null output', function(t) {
+  var fixture = tst(t, new streams.BlackholeTransform());
+
+  t.plan(1);
+
+  fixture.deepEqual('foo', null, 'Given a string we got no output as expected', t.ok, 100);
+});

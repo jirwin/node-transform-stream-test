@@ -36,7 +36,17 @@ ReverseTransform.prototype._transform = function(chunk, encoding, callback) {
 };
 
 
+var BlackholeTransform = function() {
+  Transform.call(this);
+};
+inherits(BlackholeTransform, Transform);
+
+BlackholeTransform.prototype._transform = function(chunk, encoding, callback) {
+  callback();
+};
+
+
 exports.TestObjectTransform = TestObjectTransform;
 exports.DoubleObjectTransform = DoubleObjectTransform;
 exports.ReverseTransform = ReverseTransform;
-
+exports.BlackholeTransform = BlackholeTransform;
