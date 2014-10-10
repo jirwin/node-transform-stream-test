@@ -1,6 +1,6 @@
 {
   "name": "transform-stream-test",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A simple module that leverages tape to test a transform stream",
   "main": "index.js",
   "scripts": {
