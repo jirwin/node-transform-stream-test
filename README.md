@@ -11,7 +11,7 @@ A module that leverages tape to test a transform stream. Transform streams typic
 
 `transform-stream-test` lets you easily create test cases(via tape) where you provide input and assert that you get the output you expect.
 
-## How
+## Example
 ```js
 var test = require('tape');
 var through = require('through');
