@@ -51,13 +51,13 @@ var fixture = require('transform-stream-test')(t, transformStream);
 ### fixture.deepEqual(input, output, msg, cb, timeout)
 Performs a deep equal comparing each output chunk received with each expected output chunk.
 
-* input: Array of input chunks
-* output: Array of expected output chunks
-* msg: The description of the test case
-* cb: function fired with cb(success, msg)
-  * success is a boolean representing whether or not the output matched the expectation
-  * msg is the same message provided above
-* timeout: optional number of milliseconds to finish the test case
+* `input`: Array of input chunks
+* `output`: Array of expected output chunks
+* `msg`: The description of the test case
+* `cb`: function fired with `cb(success, msg)`
+  * `success` is a boolean representing whether or not the output matched the expectation
+  * `msg` is the same message provided above
+* `timeout`: optional number of milliseconds to finish the test case
   * This is useful for when you don't expect any output
 
 ## License
