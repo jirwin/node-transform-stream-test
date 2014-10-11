@@ -159,6 +159,20 @@ test('reverse string - no output expected but output received', function(t) {
 });
 
 
+test('reverse string - array of input values', function(t) {
+  var fixture = tst(t, new streams.ReverseTransform());
+
+  t.plan(1);
+
+  fixture.deepEqual(
+    ['foo', 'bar'],
+    ['oof', 'rab'],
+    'Given a string we got no output as expected',
+    t.ok
+  );
+});
+
+
 test('blackhole - no output expected', function(t) {
   var fixture = tst(t, new streams.BlackholeTransform());
 
