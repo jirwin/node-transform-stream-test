@@ -1,11 +1,17 @@
+var EventEmitter = require('events').EventEmitter;
+var inherits = require('util').inherits;
+
 var test = require('tape');
 var _ = require('underscore');
 
+
 var TransformStreamTest = function(t, stream) {
+  EventEmitter.call(this);
   this.t = t;
   this.stream = stream;
   this.index = 0;
 };
+inherits(TransformStreamTest, EventEmitter);
 
 
 TransformStreamTest.prototype._incrementPlanned = function(num) {
@@ -55,14 +61,14 @@ TransformStreamTest.prototype.deepEqual = function(input, output, msg, callback,
 
     if (outputCounter === output.length) {
       self.stream.removeListener('data', processChunk);
-      self.stream.emit(finishedEvent);
+      self.emit(finishedEvent);
       return;
     }
   }
 
   this.stream.on('data', processChunk);
 
-  this.stream.once(finishedEvent, function() {
+  this.once(finishedEvent, function() {
     self._incrementPlanned(2);
     self.t.equal(outputCounter,
                  output.length,
@@ -74,7 +80,7 @@ TransformStreamTest.prototype.deepEqual = function(input, output, msg, callback,
   });
 
   if (timeout) {
-    setTimeout(this.stream.emit.bind(this.stream, finishedEvent), timeout);
+    setTimeout(this.emit.bind(this, finishedEvent), timeout);
   }
 
   _.each(input, function(inputChunk) {
