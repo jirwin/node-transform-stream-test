@@ -1,12 +1,24 @@
 {
   "name": "transform-stream-test",
-  "version": "0.0.4",
-  "description": "A simple module that leverages tape to test a transform stream",
+  "version": "0.0.5",
+  "description": "A module that leverages tape to test a transform stream",
   "main": "index.js",
   "scripts": {
     "just-tests": "./node_modules/faucet/bin/cmd.js ./test/*.js",
     "test": "./node_modules/covert/bin/cmd.js ./test/*.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jirwin/node-transform-stream-test.git"
+  },
+  "homepage": "https://github.com/jirwin/node-transform-stream-test",
+  "keywords": [
+    "tap",
+    "tape",
+    "stream",
+    "transform",
+    "test"
+  ],
   "author": [
     "Phoebe Simon <phoebesimon@gmail.com>",
     "Justin Gallardo <justin.gallardo@gmail.com>"
