@@ -23,7 +23,8 @@ TransformStreamTest.prototype.deepEqual = function(input, output, msg, callback,
   var self = this,
       inputCounter = 0,
       outputCounter = 0,
-      matches = 0,
+      outputLength = 0,
+      matchedOutput = [],
       finishedEvent;
 
   this.index++;
@@ -36,30 +37,32 @@ TransformStreamTest.prototype.deepEqual = function(input, output, msg, callback,
     output = [];
   }
   output = output instanceof Array ? output : [output];
+  outputLength = output.length;
 
   function processChunk(chunk) {
-    var foundMatch = false;
+    var foundMatch = false,
+        i = 0;
 
     chunk = chunk instanceof Buffer ? chunk.toString() : chunk;
 
     outputCounter++;
 
-    _.each(output, function(expectedChunk) {
-      if (_.isEqual(chunk, expectedChunk)) {
-        if (!foundMatch) {
-          matches++;
+    for (i = 0; i < output.length; i++) {
+      if (!foundMatch) {
+        if (_.isEqual(chunk, output[i])) {
+          matchedOutput.push(output.splice(i, 1));
+          foundMatch = true;
         }
-        foundMatch = true;
       }
-    });
+    }
 
     if (!foundMatch) {
       self.stream.removeListener('data', processChunk);
-      callback(false, msg);
+      callback(false, msg + ', Unmatched output: ' + JSON.stringify(output, null, 4));
       return;
     }
 
-    if (outputCounter === output.length) {
+    if (outputCounter === outputLength) {
       self.stream.removeListener('data', processChunk);
       self.emit(finishedEvent);
       return;
@@ -70,12 +73,9 @@ TransformStreamTest.prototype.deepEqual = function(input, output, msg, callback,
 
   this.once(finishedEvent, function() {
     self._incrementPlanned(2);
-    self.t.equal(outputCounter,
-                 output.length,
+    self.t.equal(outputCounter, outputLength,
                  'The expected number of output chunks were seen.');
-    self.t.equal(output.length,
-                 matches,
-                 'The expected number of output chunks matched.');
+    self.t.equal(outputLength, matchedOutput.length, 'All expected output was matched');
     callback(true, msg);
   });
 
